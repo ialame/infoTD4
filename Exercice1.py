@@ -32,6 +32,7 @@ def compter_etoiles(texte_note):
 def scraper_page(url):
     """Scrape une page et retourne la liste des produits"""
     response = requests.get(url)
+    response.encoding ='utf-8'
 
     if response.status_code != 200:
         print(f"Erreur : {response.status_code}")
@@ -50,6 +51,7 @@ def scraper_page(url):
             'Fournisseur': '',
             'Prix': 0.0,
             'Unite': '',
+            'specs':{},
             'Note': 0,
             'Disponibilite': '',
             'Delai': '',
@@ -62,7 +64,55 @@ def scraper_page(url):
         if type_elem:
             produit['Type'] = type_elem.text.strip()
 
+        # Extraire le nom
+        nom_elem = card.find('h2', class_='product-name')
+        if nom_elem:
+            produit['Nom'] = nom_elem.text.strip()
+
+        # Extraire le prix
+
+        prix_elem = card.find('div', class_='price')
+        if prix_elem:
+            produit['Prix'] = extraire_prix(prix_elem.text.strip())
+            produit['Unite'] = prix_elem.find('span').text.replace('/','')
+
+        # Extraire le fournisseur
+
+        fournisseur_elem = card.find('p', class_='supplier')
+        if fournisseur_elem:
+            produit['Fournisseur'] = fournisseur_elem.text.replace('Fournisseur :', '').strip()
         # A completer : extraire les autres champs...
+
+        # Extraire les caractéristiques techniques
+        div_specs_elem = card.find('div', class_='specs')
+        spec_item_elem = div_specs_elem.find_all('div', class_='spec-item')
+        items = {
+                'Résistance':'',
+                 'Classe':'',
+                'Délai':'',
+                'Région':'',
+                'Limite élastique':'',
+                'Diamètre':'',
+                'Résistance thermique':'',
+                'Épaisseur':''
+                 }
+        for spec_item in spec_item_elem:
+            label_elem = spec_item.find('span', class_='spec-label')
+            value_elem = spec_item.find('span', class_='spec-value')
+            items[label_elem.text.replace(':','').strip()] = value_elem.text.strip()
+        #produit['specs'] = items
+        produit['Delai']=items['Délai']
+        produit['Region']=items['Région']
+
+        # Extraire la note
+        note_elem = card.find('div', class_='rating')
+        if note_elem:
+            produit['Note'] = compter_etoiles(note_elem.text.strip())
+
+        # Extraire la disponibilité
+        dispo_elem = card.find('span', class_='availability')
+        if dispo_elem:
+            produit['Disponibilite'] = dispo_elem.text.strip()
 
         produits.append(produit)
 
@@ -83,6 +133,7 @@ def analyser_donnees(df):
     # Statistiques sur les prix
     print("\n--- STATISTIQUES DES PRIX ---")
     print(df['Prix'].describe())
+
 
     # A completer : autres analyses...
 
@@ -112,7 +163,7 @@ def main():
     print("=" * 60)
 
     base_url = 'http://www.malomatique.free.fr/MarketBTP/'
-    pages = ['index.html', 'page-2.html', 'page-3.html']
+    pages = ['index.html', 'page2.html', 'page3.html']
     tous_les_produits = []
 
     # Scraping des 3 pages
@@ -125,21 +176,21 @@ def main():
 
     # Conversion en DataFrame
     df = pd.DataFrame(tous_les_produits)
-
-    print(f"\nTotal de produits collectes : {len(df)}")
+    print(df)
+    #print(f"\nTotal de produits collectes : {len(df)}")
 
     # Nettoyage
-    df = df[df['Prix'] > 0]
+    #df = df[df['Prix'] > 0]
 
     # Analyse
-    analyser_donnees(df)
+    #analyser_donnees(df)
 
     # Visualisation
-    visualiser_donnees(df)
+    #visualiser_donnees(df)
 
     # Export CSV
-    df.to_csv('marketbtp_analyse.csv', index=False, encoding='utf-8')
-    print("\nDonnees exportees dans 'marketbtp_analyse.csv'")
+    #df.to_csv('marketbtp_analyse.csv', index=False, encoding='utf-8')
+    #print("\nDonnees exportees dans 'marketbtp_analyse.csv'")
 
 
 if __name__ == "__main__":
