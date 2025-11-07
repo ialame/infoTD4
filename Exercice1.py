@@ -133,27 +133,149 @@ def analyser_donnees(df):
     # Statistiques sur les prix
     print("\n--- STATISTIQUES DES PRIX ---")
     print(df['Prix'].describe())
+    plusCher = df.loc[df['Prix'].idxmax()]
+    print(f"Le plus cher est {plusCher['Nom']}, il coute {plusCher['Prix']:.2f} € chez {plusCher['Fournisseur']}")
+    moinsCher = df.loc[df['Prix'].idxmin()]
+    print(f"Le plus cher est {moinsCher['Nom']}, il coute {moinsCher['Prix']:.2f} € chez {moinsCher['Fournisseur']}")
 
-
+    # Prix moyen par catégorie
+    print(f"\n📦 PRIX MOYEN PAR CATÉGORIE")
+    prix_par_type = df.groupby('Type')['Prix'].agg(['mean', 'count']).sort_values('mean', ascending=False)
+    for idx, row in prix_par_type.iterrows():
+        print(f"   {idx:15s} : {row['mean']:8.2f} € (n={int(row['count'])})")
     # A completer : autres analyses...
 
+    # Prix moyen par fournisseur
+    print(f"\n🏭 PRIX MOYEN PAR FOURNISSEUR")
+    prix_par_fournisseur = df.groupby('Fournisseur')['Prix'].agg(['mean', 'count']).sort_values('mean',
+                                                                                                ascending=False)
+    for idx, row in prix_par_fournisseur.head(10).iterrows():
+        print(f"   {idx:25s} : {row['mean']:8.2f} € (n={int(row['count'])})")
+
+# Répartition de la disponibilité
+    print(f"\n📦 DISPONIBILITÉ DES PRODUITS")
+    dispo_counts = df['Disponibilite'].value_counts()
+    for dispo, count in dispo_counts.items():
+        pourcentage = (count / len(df)) * 100
+        print(f"   {dispo:20s} : {count:3d} produits ({pourcentage:5.1f}%)")
+
+    # Note moyenne
+    print(f"\n⭐ QUALITÉ")
+    print(f"   Note moyenne : {df['Note'].mean():.2f}/5")
+    print(f"   Note médiane : {df['Note'].median():.1f}/5")
+
+    # Répartition par région
+    print(f"\n🗺️  RÉPARTITION PAR RÉGION")
+    region_counts = df['Region'].value_counts()
+    for region, count in region_counts.items():
+        pourcentage = (count / len(df)) * 100
+        print(f"   {region:25s} : {count:3d} produits ({pourcentage:5.1f}%)")
 
 def visualiser_donnees(df):
-    """Cree des graphiques"""
+    """
+    Crée des graphiques d'analyse
+
+    Args:
+        df (DataFrame): DataFrame contenant les données des produits
+    """
+    print(f"\n📊 Génération des visualisations...")
 
     # 1. Top 10 des produits les plus chers
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(14, 8))
     top10 = df.nlargest(10, 'Prix')
-    plt.barh(range(len(top10)), top10['Prix'], color='steelblue')
-    plt.yticks(range(len(top10)), top10['Nom'], fontsize=9)
-    plt.xlabel('Prix (euros)', fontsize=12)
-    plt.title('Top 10 des produits les plus chers',
-              fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('top10_produits.png', dpi=300)
-    plt.show()
+    colors = plt.cm.viridis(range(len(top10)))
 
-    # A completer : autres graphiques...
+    plt.barh(range(len(top10)), top10['Prix'], color=colors)
+    plt.yticks(range(len(top10)), [f"{nom[:40]}..." if len(nom) > 40 else nom
+                                   for nom in top10['Nom']], fontsize=10)
+    plt.xlabel('Prix (€)', fontsize=12, fontweight='bold')
+    plt.title('Top 10 des produits les plus chers', fontsize=16, fontweight='bold', pad=20)
+    plt.grid(axis='x', alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('top10_produits.png', dpi=300, bbox_inches='tight')
+    print("   ✓ top10_produits.png créé")
+    plt.close()
+
+    # 2. Distribution des prix (histogramme)
+    plt.figure(figsize=(12, 7))
+    plt.hist(df['Prix'], bins=30, color='coral', edgecolor='black', alpha=0.7)
+    plt.axvline(df['Prix'].mean(), color='red', linestyle='--', linewidth=2, label=f'Moyenne: {df["Prix"].mean():.2f}€')
+    plt.axvline(df['Prix'].median(), color='green', linestyle='--', linewidth=2,
+                label=f'Médiane: {df["Prix"].median():.2f}€')
+    plt.xlabel('Prix (€)', fontsize=12, fontweight='bold')
+    plt.ylabel('Nombre de produits', fontsize=12, fontweight='bold')
+    plt.title('Distribution des prix des matériaux', fontsize=16, fontweight='bold', pad=20)
+    plt.legend(fontsize=11)
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('distribution_prix.png', dpi=300, bbox_inches='tight')
+    print("   ✓ distribution_prix.png créé")
+    plt.close()
+
+    # 3. Répartition par catégorie (pie chart)
+    plt.figure(figsize=(10, 10))
+    type_counts = df['Type'].value_counts()
+    colors_pie = plt.cm.Set3(range(len(type_counts)))
+
+    wedges, texts, autotexts = plt.pie(type_counts, labels=type_counts.index,
+                                       autopct='%1.1f%%', startangle=90,
+                                       colors=colors_pie, textprops={'fontsize': 11})
+
+    for autotext in autotexts:
+        autotext.set_color('white')
+        autotext.set_fontweight('bold')
+
+    plt.title('Répartition des produits par catégorie', fontsize=16, fontweight='bold', pad=20)
+    plt.tight_layout()
+    plt.savefig('repartition_categories.png', dpi=300, bbox_inches='tight')
+    print("   ✓ repartition_categories.png créé")
+    plt.close()
+
+    # 4. Prix moyen par fournisseur
+    plt.figure(figsize=(14, 8))
+    prix_fournisseur = df.groupby('Fournisseur')['Prix'].mean().sort_values()
+    colors_bar = plt.cm.RdYlGn_r(range(len(prix_fournisseur)))
+
+    plt.barh(range(len(prix_fournisseur)), prix_fournisseur.values, color=colors_bar)
+    plt.yticks(range(len(prix_fournisseur)), prix_fournisseur.index, fontsize=10)
+    plt.xlabel('Prix moyen (€)', fontsize=12, fontweight='bold')
+    plt.title('Prix moyen par fournisseur', fontsize=16, fontweight='bold', pad=20)
+    plt.grid(axis='x', alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('prix_fournisseurs.png', dpi=300, bbox_inches='tight')
+    print("   ✓ prix_fournisseurs.png créé")
+    plt.close()
+
+    # 5. Boxplot des prix par catégorie
+    plt.figure(figsize=(12, 8))
+    df.boxplot(column='Prix', by='Type', figsize=(12, 8), patch_artist=True)
+    plt.suptitle('')
+    plt.title('Distribution des prix par catégorie', fontsize=16, fontweight='bold', pad=20)
+    plt.xlabel('Catégorie', fontsize=12, fontweight='bold')
+    plt.ylabel('Prix (€)', fontsize=12, fontweight='bold')
+    plt.xticks(rotation=45, ha='right')
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('boxplot_categories.png', dpi=300, bbox_inches='tight')
+    print("   ✓ boxplot_categories.png créé")
+    plt.close()
+
+    # 6. Disponibilité des produits
+    plt.figure(figsize=(10, 7))
+    dispo_counts = df['Disponibilite'].value_counts()
+    colors_dispo = {'En stock': 'green', 'Stock limité': 'orange', 'Rupture stock': 'red'}
+    bar_colors = [colors_dispo.get(x, 'gray') for x in dispo_counts.index]
+
+    plt.bar(range(len(dispo_counts)), dispo_counts.values, color=bar_colors, edgecolor='black')
+    plt.xticks(range(len(dispo_counts)), dispo_counts.index, fontsize=11)
+    plt.ylabel('Nombre de produits', fontsize=12, fontweight='bold')
+    plt.title('Disponibilité des produits', fontsize=16, fontweight='bold', pad=20)
+    plt.grid(axis='y', alpha=0.3)
+    plt.tight_layout()
+    plt.savefig('disponibilite.png', dpi=300, bbox_inches='tight')
+    print("   ✓ disponibilite.png créé")
+    plt.close()
+
 
 
 # Programme principal
@@ -176,21 +298,20 @@ def main():
 
     # Conversion en DataFrame
     df = pd.DataFrame(tous_les_produits)
-    print(df)
     #print(f"\nTotal de produits collectes : {len(df)}")
 
     # Nettoyage
     #df = df[df['Prix'] > 0]
 
     # Analyse
-    #analyser_donnees(df)
+    analyser_donnees(df)
 
     # Visualisation
     #visualiser_donnees(df)
 
     # Export CSV
-    #df.to_csv('marketbtp_analyse.csv', index=False, encoding='utf-8')
-    #print("\nDonnees exportees dans 'marketbtp_analyse.csv'")
+    df.to_csv('marketbtp_analyse.csv', index=False, encoding='utf-8')
+    print("\nDonnees exportees dans 'marketbtp_analyse.csv'")
 
 
 if __name__ == "__main__":

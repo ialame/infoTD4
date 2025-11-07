@@ -1,0 +1,61 @@
+Type,Nom,Fournisseur,Prix,Unite,specs,Note,Disponibilite,Delai,Region
+Béton,Béton C25/30 XC1,Lafarge Holcim,95.5,m³,{},5,En stock,48h,Île-de-France
+Acier,Acier HA FeE500 Ø12,ArcelorMittal,850.0,tonne,{},5,En stock,72h,Île-de-France
+Maçonnerie,Brique Monomur 30cm R37,Wienerberger,42.8,m²,{},4,En stock,24h,Île-de-France
+Charpente,Poutre IPN 200 acier S235,ArcelorMittal,12.5,ml,{},5,En stock,96h,Île-de-France
+Béton,Béton C30/37 XC2-XF1,Cemex France,108.0,m³,{},5,En stock,24h,Île-de-France
+Isolation,Laine de roche 200mm R=5.55,Rockwool,18.9,m²,{},4,En stock,48h,Île-de-France
+Acier,Treillis soudé ST25C Ø6,Sivalbp,5.8,m²,{},4,Stock limité,48h,Île-de-France
+Béton,Béton C35/45 XC4-XD1,Lafarge Holcim,125.0,m³,{},5,En stock,48h,Île-de-France
+Charpente,Bois lamellé-collé GL24h,Mathis SA,780.0,m³,{},5,En stock,15 jours,Île-de-France
+Maçonnerie,Parpaing creux 20x20x50,Alkern,1.85,unité,{},3,En stock,24h,Île-de-France
+Isolation,Polystyrène expansé 120mm,Knauf Insulation,8.5,m²,{},4,En stock,48h,Île-de-France
+Acier,Acier HA FeE500 Ø16,Riva Acier,920.0,tonne,{},4,En stock,72h,Île-de-France
+Béton,Béton fibré C25/30,Cemex France,112.0,m³,{},4,En stock,24h,Île-de-France
+Charpente,Poutre HEA 200 S235JR,ArcelorMittal,15.8,ml,{},5,Stock limité,96h,Île-de-France
+Maçonnerie,Brique creuse 20cm Porotherm,Wienerberger,28.5,m²,{},4,En stock,24h,Île-de-France
+Isolation,Laine de verre 160mm R=4.0,Isover Saint-Gobain,12.8,m²,{},4,En stock,24h,Île-de-France
+Béton,Béton auto-plaçant BAP C30,Lafarge Holcim,135.0,m³,{},5,En stock,72h,Île-de-France
+Acier,Poutrelle IPE 160 S235,Riva Acier,9.2,ml,{},4,En stock,96h,Île-de-France
+Charpente,Fermettes industrielles H=5m,Mathis SA,285.0,unité,{},4,En stock,10 jours,Île-de-France
+Maçonnerie,Bloc béton cellulaire 62.5cm,Ytong,55.0,m²,{},5,Rupture stock,48h,Île-de-France
+Béton,Béton drainant C20/25,Cemex France,98.0,m³,{},4,En stock,48h,Auvergne-Rhône-Alpes
+Acier,Acier HA FeE500 Ø20,ArcelorMittal,975.0,tonne,{},5,En stock,96h,Auvergne-Rhône-Alpes
+Isolation,Panneaux polyuréthane 100mm,Soprema,22.0,m²,{},5,En stock,72h,Auvergne-Rhône-Alpes
+Charpente,Chevrons sapin 75x225mm,Scierie Bouvet,4.8,ml,{},3,En stock,48h,Auvergne-Rhône-Alpes
+Maçonnerie,Brique pleine 5.5x10.5x22,Bouyer Leroux,0.95,unité,{},4,En stock,24h,Auvergne-Rhône-Alpes
+Béton,Béton désactivé C25/30,Lafarge Holcim,118.0,m³,{},5,En stock,72h,Auvergne-Rhône-Alpes
+Acier,Cornière acier L 100x100x10,Riva Acier,8.5,ml,{},4,Stock limité,96h,Auvergne-Rhône-Alpes
+Isolation,Fibre de bois 145mm R=3.85,Steico,28.5,m²,{},5,En stock,5 jours,Auvergne-Rhône-Alpes
+Charpente,Poutre lamellé-collé 120x400,Mathis SA,52.0,ml,{},5,En stock,15 jours,Auvergne-Rhône-Alpes
+Béton,Béton imprimé C30/37,Cemex France,145.0,m³,{},4,En stock,96h,Auvergne-Rhône-Alpes
+Maçonnerie,Agglo coffrant 20x20x50,Alkern,3.2,unité,{},4,En stock,24h,Auvergne-Rhône-Alpes
+Acier,Tube acier carré 100x100x4,ArcelorMittal,11.2,ml,{},4,En stock,72h,Auvergne-Rhône-Alpes
+Isolation,Ouate de cellulose 300mm,Isocell,15.5,m²,{},5,En stock,48h,Auvergne-Rhône-Alpes
+Béton,Béton haute performance C50,Lafarge Holcim,165.0,m³,{},5,Stock limité,96h,Auvergne-Rhône-Alpes
+Charpente,Pannes Douglas 75x225mm,Scierie Bouvet,6.5,ml,{},4,En stock,72h,Auvergne-Rhône-Alpes
+Maçonnerie,Bloc béton isolant 30cm,Stepoc,38.0,m²,{},4,En stock,48h,Auvergne-Rhône-Alpes
+Acier,Acier HA FeE500 Ø25,Riva Acier,1050.0,tonne,{},5,En stock,96h,Auvergne-Rhône-Alpes
+Isolation,Laine de chanvre 100mm R=2.5,Biofib,19.8,m²,{},4,En stock,7 jours,Auvergne-Rhône-Alpes
+Béton,Béton léger C20/25,Cemex France,88.0,m³,{},3,En stock,48h,Auvergne-Rhône-Alpes
+Charpente,Poutre IPN 300 acier S235,ArcelorMittal,24.5,ml,{},5,Rupture stock,96h,Auvergne-Rhône-Alpes
+Maçonnerie,Pierre de taille calcaire,Rocamat,185.0,m²,{},5,En stock,21 jours,Provence-Alpes
+Béton,Béton ciré décoratif,Mercadier,48.0,m²,{},4,En stock,48h,Provence-Alpes
+Acier,Profilé UPN 200 S235,ArcelorMittal,16.8,ml,{},4,En stock,96h,Provence-Alpes
+Isolation,Liège expansé 100mm,Amorim,32.0,m²,{},5,En stock,10 jours,Provence-Alpes
+Charpente,Poutre contrecollée BLC 200x360,Mathis SA,45.0,ml,{},5,En stock,15 jours,Provence-Alpes
+Béton,Béton architectonique blanc,Lafarge Holcim,195.0,m³,{},5,Stock limité,96h,Provence-Alpes
+Maçonnerie,Bloc béton plein 20x20x50,Alkern,2.8,unité,{},4,En stock,24h,Provence-Alpes
+Acier,Acier HA FeE500 Ø32,Riva Acier,1180.0,tonne,{},5,En stock,7 jours,Provence-Alpes
+Isolation,Laine de mouton 120mm R=3.0,Naturlaine,24.5,m²,{},4,Stock limité,14 jours,Provence-Alpes
+Charpente,Poutre HEB 240 S355,ArcelorMittal,28.5,ml,{},5,En stock,96h,Provence-Alpes
+Béton,Mortier colle flexible C2S1,Weber,12.8,sac 25kg,{},4,En stock,24h,Provence-Alpes
+Maçonnerie,Planelle béton 20x5x50,Stepoc,1.45,unité,{},3,En stock,24h,Provence-Alpes
+Acier,Treillis soudé PAF Ø8,Sivalbp,7.2,m²,{},4,En stock,48h,Provence-Alpes
+Isolation,PIR Alu 140mm R=6.3,Kingspan,35.0,m²,{},5,En stock,72h,Provence-Alpes
+Béton,Béton projeté C30/37,Cemex France,128.0,m³,{},4,En stock,96h,Provence-Alpes
+Charpente,Bastaing épicéa 63x175mm,Scierie Bouvet,3.8,ml,{},3,En stock,48h,Provence-Alpes
+Maçonnerie,Bloc Ytong+ 37.5cm,Ytong,52.0,m²,{},5,En stock,48h,Provence-Alpes
+Acier,Poutrelle IPE 240 S235,Riva Acier,18.5,ml,{},4,En stock,96h,Provence-Alpes
+Isolation,Laine de roche 240mm R=6.6,Rockwool,22.5,m²,{},5,En stock,48h,Provence-Alpes
+Béton,Béton prêt à l'emploi C25/30,Lafarge Holcim,92.0,m³,{},4,En stock,24h,Provence-Alpes
